@@ -18,7 +18,7 @@ if [ ! -d "$VIEW_DIR" ]; then
     mkdir "$VIEW_DIR"
 fi
 
-cp ./src/content/* "$CONTENT_DIR"
-cp ./src/view/* "$VIEW_DIR"
+cp -r ./src/content/* "$CONTENT_DIR"
+cp -r ./src/view/* "$VIEW_DIR"
 
 node ./out/main.js
