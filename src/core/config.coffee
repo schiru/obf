@@ -27,6 +27,7 @@ config = require('./config.js')
      root: config.paths.view
 
 @mongoDb =
+     enabled: false
      host: 'localhost'
      port: 27017
      db: 'blogschornio'
