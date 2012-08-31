@@ -15,6 +15,9 @@ config = require('./config.js')
      notFound: (error, parameter) ->
           if config.server.debug then console.log(error)
           method.view(null, parameter, 'error.htm', config.statusCode.notFound)
+     notFoundGeneric: (error, parameter) ->
+          if config.server.debug then console.log(error)
+          method.view(null, parameter, 'error.htm', config.statusCode.notFound, 'generic')
      internalError: (error, parameter) ->
           if config.server.debug then console.log(error)
           method.view(null, parameter, 'error.htm', config.statusCode.internalError)
@@ -22,6 +25,13 @@ config = require('./config.js')
 @paths =
      content: __dirname + '/../content'
      view: __dirname + '/../view'
+
+@localization =
+     default: "en-us"
+     lookup: (parameter) ->
+          lang = parameter.get.lang
+          return if lang then lang else config.localization.default
+          return config.localization.default
 
 @mustache =
      root: config.paths.view

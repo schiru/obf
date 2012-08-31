@@ -1,13 +1,20 @@
+fs             = require('fs')
 mustache       = require('mu2')
 querystring    = require('querystring')
 
 config         = require('./config.js')
 
 
-@view = (model, parameter, viewPath, statusCode = config.statusCode.success) ->
-     parameter.response.writeHead(statusCode, 'Content-Type': 'text/html')
-     fileStream = mustache.compileAndRender(viewPath, model)
-     fileStream.pipe(parameter.response)
+@view = (model, parameter, viewName, statusCode = config.statusCode.success, lang) ->
+     viewPath = if lang then lang else config.localization.lookup(parameter)
+     viewPath = viewPath + '/' + viewName
+     filePath = config.paths.view + '/' + viewPath
+     if fs.existsSync(filePath) and fs.statSync(filePath).isFile()
+          parameter.response.writeHead(statusCode, 'Content-Type': 'text/html')
+          fileStream = mustache.compileAndRender(viewPath, model)
+          fileStream.pipe(parameter.response)
+     else
+          config.errorHandler.notFoundGeneric(null, parameter)
 
 @redirect = (path, parameter) ->
      parameter.response.writeHead(config.statusCode.redirect, 'Location': path)
