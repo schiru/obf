@@ -29,8 +29,6 @@ config = require('./config.js')
 @localization =
      default: "en-us"
      lookup: (parameter) ->
-          lang = parameter.get.lang
-          return if lang then lang else config.localization.default
           return config.localization.default
 
 @mustache =
