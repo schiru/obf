@@ -1,4 +1,4 @@
-console.log('--- obf-Engine v0.8 ---')
+console.log('--- obf-Engine v0.9 ---')
 console.log('--- obf-Example     ---')
 
 
@@ -8,6 +8,7 @@ mustache  = require('mu2')
 
 
 config    = require('./core/config.js')
+utility   = require('./core/utility.js')
 routing   = require('./core/routing.js')
 
 if config.mongoDb.enabled then db = require('./core/db.js')
@@ -34,6 +35,7 @@ main = (request, response) ->
 
      parameter = 
           get:           requestUrl.query
+          cookies:       utility.parseCookieString(request.headers.cookie)
           matchedRoute:  matchedRoute
           request:       request
           response:      response

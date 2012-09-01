@@ -9,3 +9,22 @@
           bufferPosition += 1 #Byte
 
      return buffer.toString('hex')
+
+@setCookie = (cookie, parameter) ->
+     cookieString = ''
+     for key, value of cookie
+          cookieString += key
+          if key != value
+               cookieString += '=' + value
+          cookieString += ';'
+
+     parameter.response.setHeader('Set-Cookie', cookieString)
+
+@parseCookieString = (cookieString) ->
+     if cookieString
+          cookies = {}
+          cookieString.split(';').forEach((cookie) ->
+               parts = cookie.split('=')
+               cookies[parts[0].trim()] = parts[1].trim() || ''
+          )
+          return cookies
